@@ -8,6 +8,7 @@ import { redis } from "../util/redis";
 import mongoose from "mongoose";
 import ejs, { Template } from "ejs";
 import path from "path";
+import sendMail from "../util/sendMail";
 
 //upload course
 export const uploadCourse = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
@@ -60,7 +61,7 @@ export const editCourse = CatchAsyncError(async (req: Request, res: Response, ne
             success: true,
             course
         })
-    } catch (error) {
+    } catch (error:any) {
         return next(new ErrorHandler(error.messsage, 500));
     }
 })
@@ -90,7 +91,7 @@ export const getSingleCourse = CatchAsyncError(async (req: Request, res: Respons
             success: true,
             course
         });
-    } catch (error) {
+    } catch (error:any) {
         return next(new ErrorHandler(error.messsage, 500));
     }
 });
@@ -117,7 +118,7 @@ export const getAllCourses = CatchAsyncError(async (req: Request, res: Response,
             success: true,
             course
         });
-    } catch (error) {
+    } catch (error:Error) {
         return next(new ErrorHandler(error.messsage, 500));
     }
 });
@@ -145,7 +146,7 @@ export const getCourseByUser = CatchAsyncError(async (req: Request, res: Respons
             success: true,
             content,
         });
-    } catch (error) {
+    } catch (error:Error) {
         return next(new ErrorHandler(error.messsage, 500));
     }
 })
@@ -248,15 +249,15 @@ export const addAnswer = CatchAsyncError(async (req: Request, res: Response, nex
             const html = await ejs.renderFile(path.join(__dirname, "../mails/question-reply.ejs"), data);
 
             try {
-                await sendMail{
+                await sendMail(
                     {
                         email: question.user.email,
                         subject: "Question Reply",
                         template: "question-reply.ejs",
                         data,
                     }
-                };
-            } catch (error) {
+                );
+            } catch (error:any) {
                 return next(new ErrorHandler(error.messsage, 500));
             }
         }
@@ -265,7 +266,7 @@ export const addAnswer = CatchAsyncError(async (req: Request, res: Response, nex
             success: true,
             course
         })
-    } catch (error) {
+    } catch (error:any) {
         return next(new ErrorHandler(error.messsage, 500));
     }
 })
@@ -369,7 +370,7 @@ export const addReplyToReview = CatchAsyncError( async (req:Request, res: Respon
             success: true,
             course,
         });
-    } catch (error) {
+    } catch (error:any) {
         return next(new ErrorHandler(error.messsage, 500));
     }
 })
