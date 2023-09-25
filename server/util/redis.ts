@@ -8,4 +8,5 @@ const redisClient = () => {
     }
     throw new Error(" Redis not connected");
 }
+
 export const redis = new Redis(redisClient());

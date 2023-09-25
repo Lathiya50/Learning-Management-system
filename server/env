@@ -1,0 +1,9 @@
+PORT=8000
+ORIGIN=['http://localhost:3000']
+NODE_ENV=development
+DB_URL='mongodb+srv://harmik:harmik@lms.xveo6cu.mongodb.net/lms'
+#DB_URL= mongodb://localhost:27017/lms
+CLOUD_NAME=dvp4qtirk
+CLOUD_API_KEY=748325475561654
+CLOUD_SECRET_KEY=BT78Hgrz4Os70VXetLE-00Yl2D4
+REDIS_URL="rediss://default:0067fb67104d429d9be368e8ace6ecb0@organic-walleye-37976.upstash.io:37976"

@@ -3,6 +3,8 @@ require("dotenv").config();
 import express, { NextFunction, Request, Response } from 'express';
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import courseRouter from './routes/course.route';
+
 export const app = express(); 
 
 //body parser
@@ -13,6 +15,9 @@ app.use(cookieParser());
 
 //cors => cross orign resouces sharing
 app.use(cors({ origin: process.env.ORIGIN }))
+
+//routes
+app.use("/api/v1",courseRouter);
 
 //testing API
 app.get("/test", (req:Request,res:Response,next:NextFunction) => {
