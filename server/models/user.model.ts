@@ -1,13 +1,15 @@
+require("dotenv").config();
 import mongoose, { Document, Model, Schema } from "mongoose";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 const emailRegexPattern: RegExp = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 
-export interface IUser extends Document{
+export interface IUser extends Document {
     name: string;
     email: string;
     password: string;
-    avtar: {
+    avatar: {
         public_id: string;
         url: string;
     },
@@ -15,6 +17,8 @@ export interface IUser extends Document{
     isVerified: boolean;
     courses: Array<{ courseId: string }>;
     comparePassword: (password: string) => Promise<boolean>;
+    SignAccessToken: () => string;
+    SignRefreshToken: () => string;
 }
 const userSchema: Schema<IUser> = new mongoose.Schema({
     name: {
@@ -34,11 +38,10 @@ const userSchema: Schema<IUser> = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: [true, "Please enter your password"],
         minLength: [6, "Password must be at least 6 characters"],
         select: false,
     },
-    avtar: {
+    avatar: {
         public_id: String,
         url: String
     },
@@ -66,10 +69,24 @@ userSchema.pre<IUser>('save', async function (next) {
     next();
 });
 
+//sign access token
+userSchema.methods.SignAccessToken = function () {
+    return jwt.sign({ id: this._id }, process.env.ACCESS_TOKEN || '', {
+        expiresIn: "5m"
+    });
+}
+
+//refresh token
+userSchema.methods.SignRefreshToken = function () {
+    return jwt.sign({ id: this._id }, process.env.REFRESH_TOKEN || '', {
+        expiresIn: "3d"
+    });
+}
+
 //compare password
 
-userSchema.methods.comparePassword = async function (enteredPassword: string) : Promise <Boolean> {
-        return await bcrypt.compare(enteredPassword,this.password);
+userSchema.methods.comparePassword = async function (enteredPassword: string): Promise<Boolean> {
+    return await bcrypt.compare(enteredPassword, this.password);
 }
 const userModel: Model<IUser> = mongoose.model('User', userSchema);
 
