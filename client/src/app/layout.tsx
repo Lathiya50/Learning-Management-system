@@ -1,8 +1,9 @@
-import './globals.css'
-import type { Metadata } from 'next'
+/** @format */
+"use client";
+import "./globals.css";
+import { ThemeProvider } from "next-themes";
 import { Poppins } from "next/font/google";
-import { Josefin_Sans } from 'next/font/google';
-import { ThemeProvider } from './utils/theme-provider';
+import { Josefin_Sans } from "next/font/google";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -19,15 +20,17 @@ const josefin = Josefin_Sans({
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} ${josefin.variable} !bg-white bg-no-repeat dark:bg-gradient-to-b dark:from-gray-900 dark:to-black duration-300`}>
-        <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
+      <body
+        className={`${poppins.variable} ${josefin.variable} !bg-white bg-no-repeat dark:bg-gradient-to-b dark:from-gray-900 dark:to-black duration-300`}
+      >
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
         </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }
