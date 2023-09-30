@@ -118,7 +118,7 @@ export const getAllCourses = CatchAsyncError(async (req: Request, res: Response,
             success: true,
             course
         });
-    } catch (error:Error) {
+    } catch (error:any) {
         return next(new ErrorHandler(error.messsage, 500));
     }
 });
@@ -146,7 +146,7 @@ export const getCourseByUser = CatchAsyncError(async (req: Request, res: Respons
             success: true,
             content,
         });
-    } catch (error:Error) {
+    } catch (error:any) {
         return next(new ErrorHandler(error.messsage, 500));
     }
 })
