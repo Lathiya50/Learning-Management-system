@@ -10,6 +10,7 @@ export const app = express();
 import userRouter from './routes/user.route';
 import notificationRoute from './routes/notification.routes';
 import analyticsRouter from './routes/analytics.route';
+import layoutRouter from './routes/layout.route';
  
 
 
@@ -23,7 +24,7 @@ app.use(cookieParser());
 app.use(cors({ origin: process.env.ORIGIN }))
 
 //routes
-app.use("/api/v1",courseRouter,userRouter,orderRouter, notificationRoute, analyticsRouter);
+app.use("/api/v1",courseRouter,userRouter,orderRouter, notificationRoute, analyticsRouter, layoutRouter);
 
 
 //testing API
