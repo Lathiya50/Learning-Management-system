@@ -1,4 +1,3 @@
-/** @format */
 "use client";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
@@ -24,11 +23,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`${poppins.variable} ${josefin.variable} !bg-white bg-no-repeat dark:bg-gradient-to-b dark:from-gray-900 dark:to-black duration-300`}
-      >
+      <body className={`${poppins.variable} ${josefin.variable}`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
+          {/* <h1>E-learning</h1> */}
         </ThemeProvider>
       </body>
     </html>
