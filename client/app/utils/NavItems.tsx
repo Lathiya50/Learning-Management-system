@@ -1,7 +1,5 @@
 import Link from "next/link";
 import React from "react";
-import { Poppins } from "next/font/google";
-
 export const navItemsData = [
   {
     name: "Home",
@@ -33,7 +31,7 @@ type Props = {
 const NavItems: React.FC<Props> = ({ activeItem, isMobile }) => {
   return (
     <>
-      <div className="hidden 800px:flex">
+      <div className=" hidden 800px:flex">
         {navItemsData &&
           navItemsData.map((i, index) => (
             <Link href={`${i.url}`} key={index} passHref>
@@ -62,8 +60,7 @@ const NavItems: React.FC<Props> = ({ activeItem, isMobile }) => {
           </div>
           {navItemsData &&
             navItemsData.map((i, index) => (
-              // eslint-disable-next-line react/jsx-key
-              <Link href="/" passHref>
+              <Link href="/" passHref key={index}>
                 <span
                   className={`${
                     activeItem === index
