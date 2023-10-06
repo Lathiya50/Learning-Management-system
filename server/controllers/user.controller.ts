@@ -11,7 +11,7 @@ import path from "path";
 import sendMail from "../util/sendMail";
 import { sendToken } from "../util/jwt";
 import { redis } from "../util/redis";
-import { getUserById } from '../services/user.service';
+import { getAllUsersService, getUserById, updateUserRoleService } from '../services/user.service';
 
 //Register User  
 interface IRegistrationBody {
@@ -157,20 +157,27 @@ export const updateAccessToken = CatchAsyncError(async (req: Request, res: Respo
         if (!decoded) {
             return next(new ErrorHandler(message, 400));
         }
-        const session = await redis.get(decoded.id) as string;
+        const session = await redis.get(decoded.id as string);
+        
         if (!session) {
-            return next(new ErrorHandler(message, 400));
+            return next(new ErrorHandler("Please Login to access this resource", 400));
         }
+        
         const user = JSON.parse(session);
+        
         const accessToken = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN as string, {
             expiresIn: "5m"
         });
+
         const refreshToken = jwt.sign({ id: user._id }, process.env.REFRESH_TOKEN as string, {
             expiresIn: "3d"
         })
+
+        req.user = user;
         res.cookie("access_token", accessToken, accessTokenOptions);
         res.cookie("refresh_token", refreshToken, refreshTokenOptions);
-        req.user = user;
+
+        await redis.set(user._id, JSON.stringify(user), "EX", 604800); //expire after 7 days 
 
         res.status(200).json({
             status: "success",
@@ -194,12 +201,13 @@ export const getUserInfo = CatchAsyncError(async (req: Request, res: Response, n
 })
 
 
+//social auth
+
 interface ISocialAuthBody {
     email: string,
     name: string,
     avatar: string
 }
-//social auth
 
 export const socialAuth = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -330,4 +338,47 @@ export const updateProfilePicture = CatchAsyncError(async (req: Request, res: Re
     } catch (error: any) {
         return next(new ErrorHandler(error.message, 400));
     }
-})
+});
+
+
+//get all users -- only for admin
+export const getAllUsers = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        getAllUsersService(res);
+    } catch (error: any) {
+        return next(new ErrorHandler(error.message, 400));
+    }
+});
+
+//update user role -- only for admin
+export const updateUserRole = CatchAsyncError(async(req: Request, res: Response, next: NextFunction) => {
+    try {
+        const {id, role} = req.body;
+        updateUserRoleService(res,id,role);
+    } catch (error: any) {
+        return next(new ErrorHandler(error.message, 400));
+    }
+});
+
+//delete user -- only for admin
+export const deleteUser = CatchAsyncError( async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const {id} = req.params;
+
+        const user = await userModel.findById(id);
+
+        if(!user){
+            return next(new ErrorHandler("User not found",404));
+        }
+
+        await user.deleteOne({id});
+        await redis.del(id);
+
+        res.status(200).json({
+            success: true,
+            message: "User deleted successfully"
+        });
+    } catch (error:any) {
+        return next(new ErrorHandler(error.message, 400));
+    }
+});
