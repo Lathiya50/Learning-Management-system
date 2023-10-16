@@ -44,7 +44,7 @@ export const createOrder = CatchAsyncError(
         );
       }
 
-      const course:ICourse | null = await CourseModel.findById(courseId);
+      const course: ICourse | null = await CourseModel.findById(courseId);
 
       if (!course) {
         return next(new ErrorHandler("Course not found", 404));
@@ -137,14 +137,24 @@ export const newPayment = CatchAsyncError(
       const myPayment = await stripe.paymentIntents.create({
         amount: req.body.amount,
         currency: "USD",
+        description: "E-learning course services",
         metadata: {
           company: "E-Learning",
         },
         automatic_payment_methods: {
           enabled: true,
         },
+        shipping: {
+          name: "Harmik Lathiya",
+          address: {
+            line1: "510 Townsend St",
+            postal_code: "98140",
+            city: "San Francisco",
+            state: "CA",
+            country: "US",
+          },
+        },
       });
-
       res.status(201).json({
         success: true,
         client_secret: myPayment.client_secret,

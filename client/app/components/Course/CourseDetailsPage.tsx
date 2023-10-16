@@ -51,7 +51,7 @@ const CourseDetailsPage = ({ id }: Props) => {
       ) : (
         <div>
           <Heading
-            title={data.course.name + " - ELearning"}
+            title={data?.course?.name + " - ELearning"}
             description={
               "ELearning is a programming community which is developed by shahriar sajeeb for helping programmers"
             }
