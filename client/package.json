@@ -11,8 +11,8 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.10.3",
-    "@mui/material": "^5.14.7",
+    "@mui/icons-material": "^5.14.14",
+    "@mui/material": "^5.14.14",
     "@mui/x-data-grid": "^6.11.2",
     "@reduxjs/toolkit": "^1.9.5",
     "@stripe/react-stripe-js": "^2.1.2",

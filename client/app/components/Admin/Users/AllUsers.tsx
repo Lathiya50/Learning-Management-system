@@ -237,8 +237,15 @@ const AllCourses: FC<Props> = ({ isTeam }) => {
                     className={`${styles.input} !mt-6`}
                     onChange={(e: any) => setRole(e.target.value)}
                   >
-                    <option value="admin">Admin</option>
-                    <option value="user">User</option>
+                    <option
+                      className="dark:bg-[#000] text-[#fff]"
+                      value="admin"
+                    >
+                      Admin
+                    </option>
+                    <option className="dark:bg-[#000] text-[#fff]" value="user">
+                      User
+                    </option>
                   </select>
                   <br />
                   <div

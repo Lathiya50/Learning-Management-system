@@ -146,23 +146,19 @@
   <body>
     <div class="container">
       <div class="message-sm">
-        <h1>Your ELearning order is confirmed!</h1>
+        <h1>Your E-Learning order is confirmed!</h1>
         <p>And we're just as excited as you are.</p>
       </div>
-      <br>
-      <br>
+      <br />
+      <br />
       <div class="course-info">
         <h4>Here's what you ordered:</h4>
-         <table style="border-bottom: 1px solid #0000002f;">
-            <tr>
-                <td>
-                    Order #: <%= order._id %>
-                </td>
-                <td>
-                        Order Date: <%= order.date %>
-                </td>
-            </tr>
-         </table>
+        <table style="border-bottom: 1px solid #0000002f">
+          <tr>
+            <td>Order #: <%= order._id %></td>
+            <td>Order Date: <%= order.date %></td>
+          </tr>
+        </table>
         <table style="width: 90%; margin: auto; display: block">
           <tr>
             <td class="first-td">Item</td>
@@ -179,19 +175,17 @@
           </tr>
         </table>
 
-        <table class="table-row"
-        style="border-top: 1px solid #00000029;"
-        >
+        <table class="table-row" style="border-top: 1px solid #00000029">
           <tr>
             <td class="col-2">Subtotal:</td>
             <td class="col-2">$<%= order.price %></td>
           </tr>
         </table>
-        <table class="table-row" style="margin-top: -20px;">
-            <tr>
-                <td class="col-2">Total:</td>
-                <td class="col-2">$<%= order.price %></td>
-              </tr>
+        <table class="table-row" style="margin-top: -20px">
+          <tr>
+            <td class="col-2">Total:</td>
+            <td class="col-2">$<%= order.price %></td>
+          </tr>
         </table>
       </div>
       <div class="footer">

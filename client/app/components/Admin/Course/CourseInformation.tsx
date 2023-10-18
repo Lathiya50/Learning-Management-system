@@ -174,10 +174,16 @@ const CourseInformation: FC<Props> = ({
                 setCourseInfo({ ...courseInfo, categories: e.target.value })
               }
             >
-              <option value="">Select Category</option>
+              <option className="dark:bg-[#000] text-[#fff]" value="">
+                Select Category
+              </option>
               {categories &&
                 categories.map((item: any) => (
-                  <option value={item.title} key={item._id}>
+                  <option
+                    className="dark:bg-[#000] text-[#fff]"
+                    value={item.title}
+                    key={item._id}
+                  >
                     {item.title}
                   </option>
                 ))}
@@ -213,7 +219,7 @@ const CourseInformation: FC<Props> = ({
                 setCourseInfo({ ...courseInfo, demoUrl: e.target.value })
               }
               id="demoUrl"
-              placeholder="eer74fd"
+              placeholder="Enter Demo Url"
               className={`
             ${styles.input}`}
             />
