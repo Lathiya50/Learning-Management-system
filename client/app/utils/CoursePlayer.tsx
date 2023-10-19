@@ -14,7 +14,7 @@ const CoursePlayer: FC<Props> = ({ videoUrl }) => {
 
   useEffect(() => {
     axios
-      .post("https://elearning-lms-7728bbd846c2.herokuapp.com/api/v1/getVdoCipherOTP", {
+      .post("http://localhost:8000/api/v1/getVdoCipherOTP", {
         videoId: videoUrl,
       })
       .then((res) => {
@@ -23,10 +23,10 @@ const CoursePlayer: FC<Props> = ({ videoUrl }) => {
   }, [videoUrl]);
 
   return (
-    <div style={{position:"relative",paddingTop:"56.25%",overflow:"hidden"}}>
+    <div style={{ position: "relative", paddingTop: "56.25%", overflow: "hidden" }}>
       {videoData.otp && videoData.playbackInfo !== "" && (
         <iframe
-          src={`https://player.vdocipher.com/v2/?otp=${videoData?.otp}&playbackInfo=${videoData.playbackInfo}&player=Ub9OiZXIOeUXH0Nv`}
+          src={`https://player.vdocipher.com/v2/?otp=${videoData?.otp}&playbackInfo=${videoData.playbackInfo}&player=3thUX4gz2Z2U5DvN`}
           style={{
             position: "absolute",
             top: 0,

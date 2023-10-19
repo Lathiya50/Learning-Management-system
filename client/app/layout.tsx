@@ -54,8 +54,8 @@ const Custom: FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isLoading } = useLoadUserQuery({});
 
   useEffect(() => {
-    socketId.on("connection", () => {});
+    socketId.on("connection", () => { });
   }, []);
 
-  return <div>{isLoading ? <Loader /> : <div>{children} </div>}</div>;
+  return <>{isLoading ? <Loader /> : <div>{children}</div>}</>;
 };

@@ -8,7 +8,7 @@ import Reviews from "./components/Route/Reviews";
 import FAQ from "./components/FAQ/FAQ";
 import Footer from "./components/Footer";
 
-interface Props {}
+interface Props { }
 
 const Page: FC<Props> = (props) => {
   const [open, setOpen] = useState(false);
@@ -16,25 +16,27 @@ const Page: FC<Props> = (props) => {
   const [route, setRoute] = useState("Login");
 
   return (
-    <div>
+    <>
       <Heading
         title="ELearning"
         description="ELearning is a platform for students to learn and get help from teachers"
         keywords="Prograaming,MERN,Redux,Machine Learning"
       />
-      <Header
-        open={open}
-        setOpen={setOpen}
-        activeItem={activeItem}
-        setRoute={setRoute}
-        route={route}
-      />
-      <Hero />
-      <Courses />
-      <Reviews />
-      <FAQ />
-      <Footer />
-    </div>
+      <div>
+        <Header
+          open={open}
+          setOpen={setOpen}
+          activeItem={activeItem}
+          setRoute={setRoute}
+          route={route}
+        />
+        <Hero />
+        <Courses />
+        <Reviews />
+        <FAQ />
+        <Footer />
+      </div>
+    </>
   );
 };
 
