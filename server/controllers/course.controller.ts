@@ -74,7 +74,7 @@ export const editCourse = CatchAsyncError(
         },
         { new: true }
       );
-
+      await redis.set(courseId, JSON.stringify(course)); // update course in redis
       res.status(201).json({
         success: true,
         course,
@@ -415,7 +415,7 @@ export const addReplyToReview = CatchAsyncError(
       }
 
       review.commentReplies?.push(replyData);
-      
+
       await course?.save();
 
       await redis.set(courseId, JSON.stringify(course), "EX", 604800); // 7days
