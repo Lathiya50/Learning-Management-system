@@ -9,11 +9,10 @@
   },
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only server.ts",
-    "start":"node build/server.js",
-    "heroku-postbuild":"NPM_CONFIG_PRODUCTION=false",
+    "start":"node build/server.js",    
     "build":"tsc"
   },
-  "author": "shahriar sajeeb",
+  "author": "EC & SPM Project",
   "license": "ISC",
   "dependencies": {
     "@types/bcryptjs": "^2.4.2",
