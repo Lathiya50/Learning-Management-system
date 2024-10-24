@@ -77,8 +77,6 @@ E-learning is a comprehensive Learning Management System (LMS) built with modern
 - Redux Toolkit
 - TailwindCSS
 - Socket.io-client
-- Redis
-- React-hook-form
 
 ### Backend
 
