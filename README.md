@@ -124,7 +124,7 @@ E-learning is a comprehensive Learning Management System (LMS) built with modern
     </td>
   </tr>
   <tr>
-    <td width="100%">
+    <td colspan="2" width="100%">
       <img width="638" src="https://github.com/user-attachments/assets/6cf3d670-ae63-4908-b797-e72ebaa408d1" alt="Course Details Page"/>
       <p align="center">Course Details Page</p>
     </td>
