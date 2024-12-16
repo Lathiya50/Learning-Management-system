@@ -99,6 +99,10 @@ E-learning is a comprehensive Learning Management System (LMS) built with modern
 - Prettier
 - Git
 
+## Test Credential
+
+- Email: test@gmail.com
+- Password: test123
 
 ## 📱 Screenshots
 
