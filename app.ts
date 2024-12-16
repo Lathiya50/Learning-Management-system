@@ -34,6 +34,12 @@ const limiter = rateLimit({
     max: 100,
     standardHeaders: 'draft-7',
     legacyHeaders: false,
+    handler: (req: Request, res: Response) => {
+        res.status(429).json({
+            success: false,
+            message: 'Too many requests, please try again later.',
+        });
+    }
 })
 
 // routes
@@ -48,11 +54,15 @@ app.use(
 );
 
 // testing api
-app.get("/test", (req: Request, res: Response, next: NextFunction) => {
-    res.status(200).json({
-        succcess: true,
-        message: "API is working",
-    });
+app.get("/test", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        res.status(200).json({
+            success: true,
+            message: "API is working",
+        });
+    } catch (error) {
+        next(error);
+    }
 });
 
 // unknown route
@@ -65,3 +75,12 @@ app.all("*", (req: Request, res: Response, next: NextFunction) => {
 // middleware calls
 app.use(limiter);
 app.use(ErrorMiddleware);
+
+// Add error handling middleware for express
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+    console.error('Express error:', err);
+    res.status(err.status || 500).json({
+        success: false,
+        message: err.message || 'Internal server error',
+    });
+});
