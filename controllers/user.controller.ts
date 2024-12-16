@@ -27,15 +27,55 @@ interface IRegistrationBody {
   password: string;
   avatar?: string;
 }
-
 export const registrationUser = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { name, email, password } = req.body;
 
+      // Check if email is valid using regex
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        return next(new ErrorHandler("Please enter a valid email address", 400));
+      }
+
+      // Block temporary/disposable email domains
+      const blockedDomains = [
+        "mailinator.com",
+        "guerrillamail.com", 
+        "10minutemail.com",
+        "temp-mail.org",
+        "tempmail.com",
+        "throwawaymail.com",
+        "maildrop.cc",
+        "yopmail.com",
+        "fakemailgenerator.com",
+        "burnermail.io",
+        "spamgourmet.com",
+        "getnada.com",
+        "sharklasers.com",
+        "spam4.me",
+        "dispostable.com",
+        "tempinbox.com",
+        "mohmal.com",
+        "tempmail.net",
+        "tempmailaddress.com",
+        "mytemp.email"
+      ];
+
+      const emailDomain = email.split('@')[1].toLowerCase();
+      
+      // Check if domain or part of domain matches blocked list
+      const isDomainBlocked = blockedDomains.some(blocked => 
+        emailDomain === blocked || emailDomain.includes(blocked.replace('.com',''))
+      );
+
+      if (isDomainBlocked) {
+        return next(new ErrorHandler("Please use a valid permanent email address. Temporary/disposable emails are not allowed.", 400));
+      }
+
       const isEmailExist = await userModel.findOne({ email });
       if (isEmailExist) {
-        return next(new ErrorHandler("Email already exist", 400));
+        return next(new ErrorHandler("Email already exists", 400));
       }
 
       const user: IRegistrationBody = {
